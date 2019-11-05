@@ -62,6 +62,8 @@ var localLaunchers = {
 };
 
 module.exports = function(config) {
+	const watchMode = config.singleRun;
+
 	config.set({
 		browsers: sauceLabs
 			? Object.keys(sauceLabsLaunchers)
@@ -152,11 +154,11 @@ module.exports = function(config) {
 				// rather than referencing source files inside the module
 				// directly
 				alias: {
-					'preact/debug': path.join(__dirname, './debug/src'),
-					'preact/compat': path.join(__dirname, './compat/src'),
-					'preact/hooks': path.join(__dirname, './hooks/src'),
-					'preact/test-utils': path.join(__dirname, './test-utils/src'),
-					preact: path.join(__dirname, './src')
+					'preact/debug': path.join(__dirname, './debug/'),
+					'preact/compat': path.join(__dirname, './compat/'),
+					'preact/hooks': path.join(__dirname, './hooks/'),
+					'preact/test-utils': path.join(__dirname, './test-utils/'),
+					preact: path.join(__dirname, '')
 				}
 			},
 			plugins: [
