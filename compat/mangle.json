@@ -23,6 +23,7 @@
       "$_vnode": "__v",
       "$_children": "__k",
       "$_suspensions": "__u",
+      "$_childDidSuspend": "__c",
       "$_dom": "__e",
       "$_component": "__c",
       "$__html": "__html",
