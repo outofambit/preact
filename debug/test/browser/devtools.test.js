@@ -94,7 +94,7 @@ function createMockHook() {
 
 /**
  * Check if the event has been seen (=mounted in most cases) before.
- * @param {import('../../src/internal').VNode} event
+ * @param {import('../../src/internal').VNode} vnode
  * @param {Set<import('../../src/internal').VNode>} seen
  * @returns {boolean}
  */

@@ -36,7 +36,10 @@ module.exports = function(api) {
 				test(filename) {
 					const result =
 						filename.endsWith('optionSpies.js') ||
-						filename.endsWith('.options.test.js');
+						filename.endsWith('.options.test.js') ||
+						// Devtools overrides
+						filename.includes('devtools');
+
 					return result;
 				},
 				plugins: [['babel-plugin-transform-rename-properties', { rename }]]
