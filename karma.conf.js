@@ -143,7 +143,7 @@ module.exports = function(config) {
 						loader: 'babel-loader',
 						options: {
 							plugins: coverage
-								? [['istanbul', { include: '**/src/**/*.js' }]]
+								? [['istanbul', { include: '**/dist/**/*.js' }]]
 								: []
 						}
 					}
