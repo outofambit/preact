@@ -283,6 +283,80 @@ describe('keys', () => {
 		);
 	});
 
+	it('should swap very separated keyed children efficiently', () => {
+		const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
+
+		render(<List values={values} />, scratch);
+		expect(scratch.textContent).to.equal('abcdefghij');
+
+		// swap 'b' and 'i'
+		move(values, 1, 8);
+		move(values, 7, 1);
+		clearLog();
+
+		render(<List values={values} />, scratch);
+		expect(scratch.textContent).to.equal('aicdefghbj', 'initial swap');
+		expect(getLog()).to.deep.equal(
+			[
+				'<ol>abcdefghij.insertBefore(<li>i, <li>b)',
+				'<ol>aibcdefghj.insertBefore(<li>b, <li>j)'
+			],
+			'initial swap'
+		);
+
+		// swap back
+		move(values, 8, 1);
+		move(values, 2, 8);
+		clearLog();
+
+		render(<List values={values} />, scratch);
+		expect(scratch.textContent).to.equal('abcdefghij', 'swap back');
+		expect(getLog()).to.deep.equal(
+			[
+				'<ol>aicdefghbj.insertBefore(<li>b, <li>i)',
+				'<ol>abicdefghj.insertBefore(<li>i, <li>j)'
+			],
+			'swap back'
+		);
+	});
+
+	it('should swap close keyed children efficiently', () => {
+		const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
+
+		render(<List values={values} />, scratch);
+		expect(scratch.textContent).to.equal('abcdefghij');
+
+		// swap 'b' and 'd'
+		move(values, 1, 3);
+		move(values, 2, 1);
+		clearLog();
+
+		render(<List values={values} />, scratch);
+		expect(scratch.textContent).to.equal('adcbefghij', 'initial swap');
+		expect(getLog()).to.deep.equal(
+			[
+				'<ol>abcdefghij.insertBefore(<li>c, <li>e)',
+				'<ol>abdcefghij.insertBefore(<li>b, <li>e)'
+			],
+			'initial swap'
+		);
+
+		// swap back
+		move(values, 3, 1);
+		move(values, 2, 3);
+		clearLog();
+
+		render(<List values={values} />, scratch);
+		expect(scratch.textContent).to.equal('abcdefghij', 'swap back');
+		expect(getLog()).to.deep.equal(
+			[
+				'<ol>adcbefghij.insertBefore(<li>c, <li>e)',
+				'<ol>adbcefghij.insertBefore(<li>d, <li>e)'
+			],
+			'swap back'
+		);
+	});
+
 	it('should move keyed children to the end of the list', () => {
 		const values = ['a', 'b', 'c', 'd'];
 
