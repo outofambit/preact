@@ -228,9 +228,14 @@ export function useDebugValue(value, formatter) {
 function flushAfterPaintEffects() {
 	afterPaintEffects.some(component => {
 		if (component._parentDom) {
-			component.__hooks._pendingEffects.forEach(invokeCleanup);
-			component.__hooks._pendingEffects.forEach(invokeEffect);
-			component.__hooks._pendingEffects = [];
+			try {
+				component.__hooks._pendingEffects.forEach(invokeCleanup);
+				component.__hooks._pendingEffects.forEach(invokeEffect);
+				component.__hooks._pendingEffects = [];
+			} catch (e) {
+				options._catchError(e, component._vnode);
+				return true;
+			}
 		}
 	});
 	afterPaintEffects = [];
